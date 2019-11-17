@@ -14,7 +14,8 @@ def result(request):
         if form.is_valid():
             res_search = form.cleaned_data['postcode_input']
             for items in services:
-                distance = haversine(res_search, services.lon, services.lat)
+                distance = haversine(res_search, items.lon, items.lat)
+                items.distance = distance;
             form = t_filters()
             return render(request, 'result/result.html', {'services': services, 'form': form, 'distance':distance})
     else:

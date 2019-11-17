@@ -33,7 +33,7 @@
                         </h5>
                               <div class="card-body text-left">
                               <h6 class="card-subtitle text-right">Type: {{ entry.owner }}</h6>
-                              <h6 class="card-subtitle">Distance: {{ distance|floatformat:2 }} Miles</h6>
+                              <h6 class="card-subtitle">Distance: {{ entry.distance|floatformat:2 }} Miles</h6>
                               <a class="card-text">Address: {{ entry.address }}, {{ entry.postcode }}<span class="sr-only">(current)</span></a>
                               <br></br>
                               <a class="card-text">Phone: {{ entry.phone }}</a>

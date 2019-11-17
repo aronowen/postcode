@@ -16,6 +16,7 @@ class Postcode(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=225)
+    distance = models.FloatField()
     OWNER = [
         ('NHS', 'NHS'),
         ('Private', 'Private'),
