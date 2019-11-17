@@ -1,31 +1,42 @@
 {% extends 'base.html' %}
-
-{% block content %}
-      <div class="container">
-            {% for entry in services %}
-            <div class="row">
-                  <div class="col-sm">
-                        <!--Card-->
-                        <div class="card ">
-                              <h5 class="card-header text-center">{{ entry.name }}
-                                    <button class="float-right btn btn-success" type="button" data-target="#navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
-                                          <span class="dark-blue-text">
-                                                <i class="fa fa-plus"></i>
-                                          </span>
-                                    </button>
-                              </h5>
-
-                              <div class="card-body text-left">
-                                    <h6 class="card-subtitle text-right">Type: {{ entry.owner }}</h6>
-                                    <h6 class="card-subtitle">Distance: {{ entry.haversine|floatformat:2 }} Miles</h6>
-                                    <a class="card-text">Address: {{ entry.address }}, {{ entry.postcode }}<span class="sr-only">(current)</span></a>
-                                    <br></br>
-                                    <a class="card-text">Phone: {{ entry.phone }}</a>
-                              </div>
+{% block search %}
+      <div class="row">
+            <form class="" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="">
+                        <input class="form-control" type="text" placeholder="Default input">
+                        <div class="flex justify-center mt-4">
+                              <button class="" type="submit">
+                                          Submit
+                              </button>
                         </div>
-                        <!-- card -->
                   </div>
-            </div>
-            {% endfor %}
+            </form>
       </div>
+{% endblock %}
+{% block content %}
+      {% for entry in services %}
+      <div class="row">
+            <div class="col-sm">
+                  <!--Card-->
+                  <div class="card ">
+                        <h5 class="card-header text-center">{{ entry.name }}
+                              <button class="float-right btn btn-success" type="button" data-target="#navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="dark-blue-text">
+                                          <i class="fa fa-plus"></i>
+                                    </span>
+                              </button>
+                        </h5>
+                              <div class="card-body text-left">
+                              <h6 class="card-subtitle text-right">Type: {{ entry.owner }}</h6>
+                              <h6 class="card-subtitle">Distance: {{ entry.haversine|floatformat:2 }} Miles</h6>
+                              <a class="card-text">Address: {{ entry.address }}, {{ entry.postcode }}<span class="sr-only">(current)</span></a>
+                              <br></br>
+                              <a class="card-text">Phone: {{ entry.phone }}</a>
+                        </div>
+                  </div>
+                  <!-- card -->
+            </div>
+      </div>
+      {% endfor %}
 {% endblock %}
