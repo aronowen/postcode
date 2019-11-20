@@ -22,10 +22,11 @@ class Service(models.Model):
         ('Private', 'Private'),
     ]
     owner = models.CharField(max_length=500, choices=OWNER)
-    doctor = models.BooleanField(default=False)
-    dentist = models.BooleanField(default=False)
-    optician = models.BooleanField(default=False)
-    schools = models.BooleanField(default=False)
+    TYPE=[('Doctors','Doctors'),
+          ('Schools', 'Schools'),
+          ('Dentists','Dentists'),
+          ('Optometrists', 'Optometrists')]
+    type = models.CharField(max_length=500, choices=TYPE)
     address = models.CharField(max_length=225)
     postcode = models.CharField(max_length=225)
     phone = models.CharField(max_length=225)

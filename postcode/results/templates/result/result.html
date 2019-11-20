@@ -1,25 +1,32 @@
 {% extends 'base.html' %}
 {% block search %}
-      <div class="row">
             <form class="" method="POST" enctype="multipart/form-data">
                   {% csrf_token %}
-                  <div class="">
+                  <div class="row">
                         {% for field in form %}
-					<label class="text-white font-bold tracking-wide block mb-2" for="{{ field.name }}">{{ field.label }}</label>
-					{{ field }}
-				{% endfor %}
-                        <!--<input class="form-control" type="text" placeholder="Default input">-->
-                        <div class="flex justify-center mt-4">
-                              <button class="" type="submit">
-                                          Submit
-                              </button>
+                        <div class = "col-sm " role="group">
+                              <div class = "text-center">
+            			      <label class="" for="{{ field.name }}"><h5>{{ field.label }}</h5></label>
+                              </div>
+                              <hr>
+                              <br>
+            			{{ field }}
                         </div>
+            		{% endfor %}
+                  </div>
+                  <div class="text-center">
+                        <button class="btn btn-success" type="submit">
+                                    Search
+                        </button>
                   </div>
             </form>
-      </div>
+            <br>
+            <hr>
 {% endblock %}
 {% block content %}
+<br>
       {% for entry in services %}
+      {% if entry.owner == owner and entry.type == type and entry.distance <= max_distance %}
       <div class="row">
             <div class="col-sm">
                   <!--Card-->
@@ -33,7 +40,7 @@
                         </h5>
                               <div class="card-body text-left">
                               <h6 class="card-subtitle text-right">Type: {{ entry.owner }}</h6>
-                              <h6 class="card-subtitle">Distance: {{ entry.distance|floatformat:2 }} Miles</h6>
+                              <h6 class="card-subtitle">Distance: {{ entry.distance|floatformat:2 }} {{ metric }}</h6>
                               <a class="card-text">Address: {{ entry.address }}, {{ entry.postcode }}<span class="sr-only">(current)</span></a>
                               <br></br>
                               <a class="card-text">Phone: {{ entry.phone }}</a>
@@ -42,5 +49,6 @@
                   <!-- card -->
             </div>
       </div>
+      {% endif %}
       {% endfor %}
 {% endblock %}

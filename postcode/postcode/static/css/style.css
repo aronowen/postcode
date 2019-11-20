@@ -1,0 +1,10 @@
+ul
+{
+      list-style-type:none
+}
+.custom-control-input:checked
+{
+  color: #fff;
+  border-color: #7B1FA2;
+  background-color: #7B1FA2;
+}

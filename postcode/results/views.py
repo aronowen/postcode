@@ -13,26 +13,42 @@ def result(request):
         form = t_filters(request.POST)
         if form.is_valid():
             res_search = form.cleaned_data['postcode_input']
+            owner = form.cleaned_data['owner']
+            type = form.cleaned_data['type']
+            max_distance = form.cleaned_data['max_distance']
+            metric = form.cleaned_data['metric']
+            print(metric)
             for items in services:
-                distance = haversine(res_search, items.lon, items.lat)
-                items.distance = distance;
-            form = t_filters()
-            return render(request, 'result/result.html', {'services': services, 'form': form, 'distance':distance})
+                if metric == 'Miles':
+                    distance = haversine(res_search, 3958.8, items.lon, items.lat)
+                    items.distance = distance;
+                else:
+                    distance = haversine(res_search, 6371, items.lon, items.lat)
+                    items.distance = distance;
+            #form = t_filters()
+            context = {
+
+            }
+            print(owner, " , ", type)
+            return render(request, 'result/result.html', {
+                'services': services,
+                'form': form,
+                'distance': distance,
+                'owner': owner,
+                'type': type,
+                'max_distance': max_distance,
+                'metric': metric
+            })
     else:
         form = t_filters()
         return render(request, 'result/result.html', {'services': services, 'form': form})
 
-def haversine(postcode, lon, lat):
-    R = 3958.8;
-    postcode_obj = Service.objects.all()
+def haversine(postcode, R,  lon, lat):
     postcode_obj2 = Postcode.objects.get(postcode2=postcode)
     longitude1 = lon
     latitude1 = lat
     longitude2 = postcode_obj2.lon2 #53.2298
     latitude2 = postcode_obj2.lat2 #-4.12395
-
-    print(f"{longitude1} | {latitude1} ", "TEST", " 53.143666 | -4.257318")
-    print(f"{longitude2} | {latitude2} ", "TEST", " 53.2298 | -4.12395")
 
     rad_lon_1 = math.radians(longitude1)
     rad_lat_1 = math.radians(latitude1)
