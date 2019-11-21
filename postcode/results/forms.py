@@ -2,7 +2,7 @@ from django import forms
 from .models import Postcode
 
 class t_filters(forms.Form):
-    postcode_input = forms.CharField(max_length=20)
+    postcode_input = forms.CharField(max_length=8)
     OWNER=[('Private','Private'),
                    ('NHS','NHS')]
     owner = forms.ChoiceField(choices=OWNER, widget = forms.RadioSelect)
@@ -19,7 +19,7 @@ class t_filters(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        postcode_input = forms.RegexField(label=("Username"), max_length=30, regex=r'^[a-zA-Z0-9]+$',)
+        postcode_input = forms.RegexField(label=("postcode_input"), max_length=8, regex=r'^([A-PR-UWYZ](([0-9](([0-9]|[A-HJKSTUW])?)?)|([A-HK-Y][0-9]([0-9]|[ABEHMNPRVWXY])?)) ?[0-9][ABD-HJLNP-UW-Z]{2})$',)
         self.fields['postcode_input'].widget.attrs['placeholder'] = 'LL57 1UT'
         self.fields['owner'].widget.attrs['class'] = ''
         self.fields['type'].widget.attrs['class'] = ''

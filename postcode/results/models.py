@@ -16,14 +16,14 @@ class Postcode(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=225)
-    distance = models.FloatField()
+    distance = models.FloatField(default=1)
     OWNER = [
         ('NHS', 'NHS'),
         ('Private', 'Private'),
     ]
     owner = models.CharField(max_length=500, choices=OWNER)
     TYPE=[('Doctors','Doctors'),
-          ('Schools', 'Schools'),
+          ('Nursery', 'Nursery'),
           ('Dentists','Dentists'),
           ('Optometrists', 'Optometrists')]
     type = models.CharField(max_length=500, choices=TYPE)
