@@ -5,6 +5,7 @@ from .models import Postcode
 from .forms import t_filters
 
 import math
+import re
 
 def result(request):
     services = Service.objects.all()
@@ -17,13 +18,15 @@ def result(request):
             type = form.cleaned_data['type']
             max_distance = form.cleaned_data['max_distance']
             metric = form.cleaned_data['metric']
-            print(metric)
+            t_filters.clean_postcode(res_search)
+            fmt_res_search = res_search.strip().upper().replace(" ", "")
+            print(fmt_res_search)
             for items in services:
                 if metric == 'Miles':
-                    distance = haversine(res_search, 3958.8, items.lon, items.lat)
+                    distance = haversine(fmt_res_search, 3958.8, items.lon, items.lat)
                     items.distance = distance;
                 else:
-                    distance = haversine(res_search, 6371, items.lon, items.lat)
+                    distance = haversine(fmt_res_search, 6371, items.lon, items.lat)
                     items.distance = distance;
             #form = t_filters()
             context = {

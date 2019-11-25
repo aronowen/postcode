@@ -7,7 +7,7 @@ class t_filters(forms.Form):
                    ('NHS','NHS')]
     owner = forms.ChoiceField(choices=OWNER, widget = forms.RadioSelect)
     TYPE=[('Doctors','Doctors'),
-          ('Schools', 'Schools'),
+          ('Nursery', 'Nursery'),
           ('Dentists','Dentists'),
           ('Optometrists', 'Optometrists')]
     type = forms.ChoiceField(choices=TYPE, widget= forms.RadioSelect)
@@ -19,7 +19,15 @@ class t_filters(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        postcode_input = forms.RegexField(label=("postcode_input"), max_length=8, regex=r'^([A-PR-UWYZ](([0-9](([0-9]|[A-HJKSTUW])?)?)|([A-HK-Y][0-9]([0-9]|[ABEHMNPRVWXY])?)) ?[0-9][ABD-HJLNP-UW-Z]{2})$',)
         self.fields['postcode_input'].widget.attrs['placeholder'] = 'LL57 1UT'
         self.fields['owner'].widget.attrs['class'] = ''
         self.fields['type'].widget.attrs['class'] = ''
+
+
+    def clean_postcode(res_search):
+        data = res_search
+
+        if '@' in data or '-' in data or '|' in data:
+            raise forms.ValidationError("Usernames should not have special characters.")
+
+        return data
