@@ -27,7 +27,7 @@ class t_filters(forms.Form):
     def clean_postcode(res_search):
         data = res_search
 
-        if '@' in data or '-' in data or '|' in data:
+        if '@' in data or '-' in data or '|' in data or '*' in data:
             raise forms.ValidationError("Usernames should not have special characters.")
 
         return data
