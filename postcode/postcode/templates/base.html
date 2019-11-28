@@ -18,6 +18,10 @@
         <h1 class = "text-center font-bold">Postcode Search</h1>
     </header>
     <div class = "container">
+      {% block error %}
+      {% endblock %}
+  </div>
+    <div class = "container">
         {% block search %}
         {% endblock %}
     </div>

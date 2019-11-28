@@ -18,30 +18,31 @@ def result(request):
             type = form.cleaned_data['type']
             max_distance = form.cleaned_data['max_distance']
             metric = form.cleaned_data['metric']
-            t_filters.clean_postcode(res_search)
-            fmt_res_search = res_search.strip().upper().replace(" ", "")
-            print(fmt_res_search)
-            for items in services:
-                if metric == 'Miles':
-                    distance = haversine(fmt_res_search, 3958.8, items.lon, items.lat)
-                    items.distance = distance;
-                else:
-                    distance = haversine(fmt_res_search, 6371, items.lon, items.lat)
-                    items.distance = distance;
-            #form = t_filters()
-            context = {
+            res_search = t_filters.clean_postcode(res_search)
+            print(res_search)
+            if res_search == 'Postcodes should not have special characters.':
+                form = t_filters()
+                return render(request, 'result/result.html', {'form': form, 'res_search': res_search})
+                print("called")
+            else:
+                fmt_res_search = res_search.strip().upper().replace(" ", "")
+                for items in services:
+                    if metric == 'Miles':
+                        distance = haversine(fmt_res_search, 3958.8, items.lon, items.lat)
+                        items.distance = distance;
+                    else:
+                        distance = haversine(fmt_res_search, 6371, items.lon, items.lat)
+                        items.distance = distance;
 
-            }
-            print(owner, " , ", type)
-            return render(request, 'result/result.html', {
-                'services': services,
-                'form': form,
-                'distance': distance,
-                'owner': owner,
-                'type': type,
-                'max_distance': max_distance,
-                'metric': metric
-            })
+                return render(request, 'result/result.html', {
+                    'services': services,
+                    'form': form,
+                    'distance': distance,
+                    'owner': owner,
+                    'type': type,
+                    'max_distance': max_distance,
+                    'metric': metric
+                })
     else:
         form = t_filters()
         return render(request, 'result/result.html', {'services': services, 'form': form})

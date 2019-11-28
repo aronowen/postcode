@@ -28,6 +28,6 @@ class t_filters(forms.Form):
         data = res_search
 
         if '@' in data or '-' in data or '|' in data or '*' in data:
-            raise forms.ValidationError("Usernames should not have special characters.")
-
+            #raise forms.ValidationError("Usernames should not have special characters.")
+            data = ('Postcodes should not have special characters.')
         return data

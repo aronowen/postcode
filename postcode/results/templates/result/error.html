@@ -1,13 +1,4 @@
 {% extends 'base.html' %}
-{% block error %}
-      {% if res_search == "Postcodes should not have special characters." %}
-            <div class="card text-white bg-danger mb-3 mx-auto" style="max-width: 64rem;">
-                  <div class="card-body">
-                        <p class="card-text">Invalid Input: {{ res_search }}</p>
-                  </div>
-            </div>
-      {% endif %}
-{% endblock %}
 {% block search %}
             <form class="" method="POST" enctype="multipart/form-data">
                   {% csrf_token %}
